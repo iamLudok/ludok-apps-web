@@ -6,7 +6,7 @@ const count: App = {
   name: 'Ludok Count',
   short: 'Count',
   repo: 'iamLudok/Ludok-count',
-  available: false,
+  available: true,
   pay: true,
   platforms: ['Android'],
   schemaCategory: 'LifestyleApplication',

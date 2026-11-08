@@ -6,7 +6,7 @@ const time: App = {
   name: 'Ludok Time',
   short: 'Time',
   repo: 'iamLudok/Ludok-time',
-  available: false,
+  available: true,
   pay: true,
   platforms: ['Android'],
   schemaCategory: 'EntertainmentApplication',

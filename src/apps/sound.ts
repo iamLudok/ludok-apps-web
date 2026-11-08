@@ -6,7 +6,7 @@ const sound: App = {
   slug: 'sound',
   name: 'Ludok Sound',
   short: 'Sound',
-  repo: 'iamLudok/SounDouk',
+  repo: 'iamLudok/Ludok-sound',
   available: false,
   pay: true,
   platforms: ['Android', 'Android Auto', 'Linux', 'Windows'],

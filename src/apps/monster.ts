@@ -9,8 +9,8 @@ const monster: App = {
   slug: 'monster',
   name: 'Ludok Monster',
   short: 'Monster',
-  repo: null,
-  available: false,
+  repo: 'iamLudok/Ludok-monster',
+  available: true,
   pay: false,
   platforms: ['Android'],
   schemaCategory: 'LifestyleApplication',
@@ -48,7 +48,7 @@ const monster: App = {
       ],
       privacy:
         'Tus latas, notas y compras no salen del móvil. Para el mapa de compras, la app carga el mapa de OpenStreetMap y sitúa cada ciudad una sola vez con Nominatim, sin cuenta.',
-      note: 'Proyecto de fan, sin relación con Monster Energy ni con su titular. Monster Energy es una marca registrada de su titular. Esta app es gratis y no acepta pagos.',
+      note: 'Proyecto de fan, sin relación con Monster Energy ni con su titular. Monster Energy es una marca registrada de su titular. Esta app es gratis, no acepta pagos y se retirará si el titular de la marca lo pide.',
       scenes: [
         {
           modo: 'torre',
@@ -97,7 +97,7 @@ const monster: App = {
       ],
       privacy:
         'Your cans, ratings and purchases never leave your phone. For the purchase map, the app loads OpenStreetMap and places each city once with Nominatim, with no account.',
-      note: 'A fan project, not affiliated with Monster Energy or its owner. Monster Energy is a registered trademark of its owner. This app is free and does not accept payments.',
+      note: 'A fan project, not affiliated with Monster Energy or its owner. Monster Energy is a registered trademark of its owner. This app is free, does not accept payments, and will be taken down if the trademark owner asks.',
       scenes: [
         {
           modo: 'torre',
