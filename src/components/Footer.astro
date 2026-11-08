@@ -1,0 +1,55 @@
+---
+// Pie: marca, todas las apps y los recursos (instalar, pagar, GitHub, privacidad).
+import { apps } from '../apps';
+import { ui } from '../i18n';
+import { appPaths, AUTHOR, GITHUB_URL, href, PORTFOLIO_URL, KOFI_URL, paths, type Lang } from '../site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const home = href(paths.home[lang]);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href={home}>
+          Ludok
+        </a>
+        <p>{t.footer.tagline}</p>
+      </div>
+      <nav aria-labelledby="footer-apps">
+        <h2 id="footer-apps">{t.footer.apps}</h2>
+        <ul class="footer-apps">
+          {
+            apps.map((app) => (
+              <li>
+                <a href={href(appPaths(app.slug)[lang])}>{app.name}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <nav aria-labelledby="footer-resources">
+        <h2 id="footer-resources">{t.footer.resources}</h2>
+        <ul>
+          <li><a href={href(paths.install[lang])}>{t.nav.install}</a></li>
+          <li><a href={`${home}#pay`}>{t.nav.pay}</a></li>
+          {KOFI_URL && <li><a href={KOFI_URL}>Ko-fi</a></li>}
+          <li><a href={GITHUB_URL}>GitHub</a></li>
+          <li><a href={PORTFOLIO_URL}>Portfolio</a></li>
+          <li><a href={href(paths.privacy[lang])}>{t.footer.privacy}</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© {year} <a href={PORTFOLIO_URL}>{AUTHOR}</a></span>
+      <a href={href(paths.privacy[lang])}>{t.privacy.title}</a>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,24 @@
+{
+  "name": "ludok-web",
+  "description": "Web de las apps Ludok: catálogo, descargas y paga lo que quieras, en castellano e inglés",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "assets:monster": "tsx scripts/monster-3d.ts"
+  },
+  "dependencies": {
+    "astro": "7.4.1",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@types/three": "^0.186.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
+  }
+}

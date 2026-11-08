@@ -1,0 +1,109 @@
+---
+// La caja de descarga de una app: gratis, el APK de su última release y, si la app lo acepta,
+// pagar lo que se quiera en Ko-fi. Mientras la app no tenga release pública sale como
+// «Próximamente», sin enlaces (el repo puede ser privado).
+//
+// Al descargar se abre un aviso con los pasos para instalar, que es justo cuando hacen falta. Solo
+// cuando el enlace es el APK directo: si va a la página de releases, la visita se va de la web.
+import Icon from './Icon.astro';
+import KofiButton from './KofiButton.astro';
+import type { App } from '../apps';
+import { ui } from '../i18n';
+import type { Release } from '../lib/releases';
+import { formatDate, href, KOFI_URL, paths, type Lang } from '../site';
+
+interface Props {
+  app: App;
+  lang: Lang;
+  release: Release | null;
+}
+
+const { app, lang, release } = Astro.props;
+const t = ui[lang].app;
+const d = ui[lang].dialog;
+const releasesUrl = app.repo ? `https://github.com/${app.repo}/releases` : null;
+const apkUrl = release?.apkUrl ?? (releasesUrl && `${releasesUrl}/latest`);
+const canDownload = app.available && apkUrl;
+---
+
+<div class="download-box" id="download">
+  {
+    canDownload ? (
+      <>
+        <p class="price">
+          <strong>{t.free}</strong>
+          <span>{app.pay ? t.payTitle : t.fanTitle}</span>
+        </p>
+        <p class="download-copy">{app.pay ? t.payBody : t.fanBody}</p>
+        <div class="actions">
+          <a class="btn btn-on" href={apkUrl} data-download={release ? '' : undefined}>
+            <Icon name="download" />
+            {t.download}
+          </a>
+          {app.pay && <KofiButton lang={lang} />}
+        </div>
+        <p class="download-meta">
+          {release && <span>{release.version}</span>}
+          {release && <span>{release.sizeMB} MB</span>}
+          {release && <span>{formatDate(release.date, lang)}</span>}
+          <span>{t.android}</span>
+          {releasesUrl && <a href={releasesUrl}>{t.allVersions}</a>}
+          {app.repo && <a href={`https://github.com/${app.repo}`}>{t.code}</a>}
+        </p>
+      </>
+    ) : (
+      <>
+        <p class="price">
+          <strong>{t.soonTitle}</strong>
+        </p>
+        <p class="download-copy">{t.soonBody}</p>
+      </>
+    )
+  }
+</div>
+
+{
+  canDownload && release && (
+    <dialog class="download-dialog" aria-labelledby="download-dialog-title">
+      <div class="dialog-body">
+        <h2 id="download-dialog-title">{d.title}</h2>
+        <p>{d.lead}</p>
+        <ol>
+          {d.steps.map((step) => (
+            <li>{step}</li>
+          ))}
+        </ol>
+        <a class="link" href={href(paths.install[lang])}>
+          {d.guide}
+          <Icon name="arrow" />
+        </a>
+        {app.pay && KOFI_URL && (
+          <div class="dialog-pay">
+            <p>{d.pay(app.name)}</p>
+            <KofiButton lang={lang} class="btn-sm" />
+          </div>
+        )}
+        <form method="dialog">
+          <button class="btn btn-sm">{d.close}</button>
+        </form>
+      </div>
+    </dialog>
+  )
+}
+
+<script>
+  // La descarga sigue su curso (es un enlace normal al APK) y, un instante después, se abre el
+  // aviso. Sin JavaScript el enlace descarga igual, solo que sin aviso. Se cierra con su botón, con
+  // Escape o tocando fuera: el contenido va en .dialog-body, así que un clic cuyo destino es el
+  // propio <dialog> solo puede ser en el fondo.
+  const dialog = document.querySelector<HTMLDialogElement>('.download-dialog');
+
+  if (dialog && typeof dialog.showModal === 'function') {
+    for (const link of document.querySelectorAll('[data-download]')) {
+      link.addEventListener('click', () => setTimeout(() => dialog.showModal(), 400));
+    }
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  }
+</script>

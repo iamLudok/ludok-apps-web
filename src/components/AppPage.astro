@@ -1,0 +1,205 @@
+---
+// La página de una app, en el idioma que le pasen: pages/apps/[slug].astro y su pareja en inglés
+// solo la llaman. Los textos están en src/apps/<app>.ts; la versión, el tamaño y el APK salen de su
+// última release de GitHub, al compilar.
+//
+// La cabecera enseña lo más vistoso que tenga la app: su torre en 3D, sus capturas en abanico o,
+// si no hay nada, su icono en grande. Con dos capturas o más, debajo va el recorrido por la app.
+import AppCard from './AppCard.astro';
+import AppIcon from './AppIcon.astro';
+import DownloadBox from './DownloadBox.astro';
+import Icon from './Icon.astro';
+import Monster3D from './Monster3D.astro';
+import PhoneFan from './PhoneFan.astro';
+import Story from './Story.astro';
+import Base from '../layouts/Base.astro';
+import { otherApps, type App } from '../apps';
+import { ui } from '../i18n';
+import { latestRelease } from '../lib/releases';
+import { appPaths, AUTHOR, GITHUB_URL, href, MIN_ANDROID, paths, type Lang } from '../site';
+
+interface Props {
+  app: App;
+  lang: Lang;
+}
+
+const { app, lang } = Astro.props;
+const t = ui[lang].app;
+const text = app.text[lang];
+const release = app.available && app.repo ? await latestRelease(app.repo) : null;
+const shots = text.shots ?? [];
+const torre = text.scenes?.find((scene) => scene.modo === 'torre');
+const lata = text.scenes?.find((scene) => scene.modo === 'lata');
+const needs = [t.needsPhone, ...(text.needs ?? [])];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'MobileApplication',
+  name: app.name,
+  description: text.lead,
+  applicationCategory: app.schemaCategory,
+  operatingSystem: `Android ${MIN_ANDROID}`,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  author: { '@type': 'Person', name: AUTHOR, url: GITHUB_URL },
+  // El idioma de la app, no el de la página: la interfaz solo está en castellano.
+  inLanguage: 'es',
+  ...(shots[0] && { screenshot: new URL(href(`/img/${app.slug}/${shots[0].image}.webp`), Astro.site).toString() }),
+  ...(release && {
+    softwareVersion: release.version,
+    downloadUrl: release.apkUrl,
+    fileSize: `${release.sizeMB} MB`,
+    datePublished: release.date.toISOString().slice(0, 10),
+  }),
+  ...(app.available &&
+    app.repo && {
+      codeRepository: `https://github.com/${app.repo}`,
+      license: 'https://opensource.org/licenses/MIT',
+    }),
+};
+---
+
+<Base
+  lang={lang}
+  title={`${app.name}: ${text.title}`}
+  description={text.lead}
+  paths={appPaths(app.slug)}
+  current="app"
+  jsonLd={jsonLd}
+>
+  <section class="hero app-hero">
+    <div class="wrap hero-grid">
+      <div>
+        <a class="back" href={`${href(paths.home[lang])}#apps`}>
+          <Icon name="arrow" />
+          {t.back}
+        </a>
+        <div class="app-heading">
+          <AppIcon slug={app.slug} />
+          <span class="label">{text.category}</span>
+        </div>
+        <h1>{app.name}</h1>
+        <p class="tagline">{text.tagline}</p>
+        <p class="lead">{text.lead}</p>
+        <ul class="chips">
+          {app.platforms.map((platform) => <li>{platform}</li>)}
+          <li>{t.spanish}</li>
+        </ul>
+        <DownloadBox app={app} lang={lang} release={release} />
+        {text.note && <p class="note">{text.note}</p>}
+        {
+          app.website && (
+            <a class="link website" href={app.website}>
+              {t.website(app.name)}
+              <Icon name="arrow" />
+            </a>
+          )
+        }
+      </div>
+      <div class="hero-visual">
+        {
+          torre ? (
+            <Monster3D modo="torre" lang={lang} label={torre.label} />
+          ) : shots.length > 0 ? (
+            <PhoneFan slug={app.slug} shots={shots} />
+          ) : (
+            <div class="app-art">
+              <AppIcon slug={app.slug} />
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  {
+    shots.length > 1 && (
+      <section class="section" id="inside">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <span class="label">
+              <span class="dot" />
+              {t.storyKicker}
+            </span>
+            <h2>{t.storyTitle(app.name)}</h2>
+          </div>
+          <Story slug={app.slug} shots={shots} />
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>{t.featuresTitle}</h2>
+      </div>
+      <ul class="features">
+        {
+          text.features.map((feature, i) => (
+            <li class="feature" data-reveal style={`--delay: ${(i % 3) * 80}ms`}>
+              <h3>{feature.title}</h3>
+              <p>{feature.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {
+    lata && (
+      <section class="section band-dark showcase-3d" id="lata-3d">
+        <div class="wrap showcase-3d-grid">
+          <div class="section-head" data-reveal>
+            <span class="label">
+              <span class="dot" />
+              {t.kicker3d}
+            </span>
+            <h2>{lata.title}</h2>
+            <p>{lata.body}</p>
+          </div>
+          <Monster3D modo="lata" lang={lang} label={lata.label} />
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section" id="privacy">
+    <div class="wrap privacy-grid">
+      <div class="privacy-box" data-reveal>
+        <Icon name="shield" />
+        <div>
+          <h2>{t.privacyTitle}</h2>
+          <p>{text.privacy}</p>
+          <ul class="checks">
+            {
+              t.privacyPoints.map((point) => (
+                <li>
+                  <Icon name="check" />
+                  {point}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+      <div class="needs-box" data-reveal style="--delay: 120ms">
+        <h2>{t.needsTitle}</h2>
+        <ul>
+          {needs.map((need) => <li>{need}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="more">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>{t.moreTitle}</h2>
+      </div>
+      <ul class="app-grid">
+        {otherApps(app.slug).map((other) => <AppCard app={other} lang={lang} />)}
+      </ul>
+    </div>
+  </section>
+</Base>

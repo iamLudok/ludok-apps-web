@@ -1,0 +1,27 @@
+---
+// El botón de pagar lo que se quiera en Ko-fi. Sin KOFI_URL no sale en la web publicada (mejor
+// ninguno que uno que lleve el dinero a otra persona); en local se ve un aviso en su lugar, para que
+// no se olvide configurarlo.
+import Icon from './Icon.astro';
+import { ui } from '../i18n';
+import { KOFI_URL, type Lang } from '../site';
+
+interface Props {
+  lang: Lang;
+  class?: string;
+}
+
+const { lang, class: className } = Astro.props;
+const t = ui[lang].pay;
+---
+
+{
+  KOFI_URL ? (
+    <a class:list={['btn btn-primary', className]} href={KOFI_URL}>
+      <Icon name="heart" />
+      {t.cta}
+    </a>
+  ) : (
+    import.meta.env.DEV && <span class:list={['btn btn-todo', className]}>{t.todo}</span>
+  )
+}

@@ -1,0 +1,46 @@
+---
+// La imagen de la portada: un móvil Android con las apps Ludok en la pantalla de inicio. Está hecho
+// con HTML y no es una captura, así que una app nueva sale sola en cuanto entra en src/apps/. Cada
+// icono lleva a la página de su app, como si se abriese.
+import AppIcon from './AppIcon.astro';
+import { apps } from '../apps';
+import { ui } from '../i18n';
+import { appPaths, href, type Lang } from '../site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang].hero;
+---
+
+<figure class="phone home-screen">
+  <div class="screen">
+    <div class="status" aria-hidden="true">
+      <span>12:30</span>
+      <svg viewBox="0 0 44 12" fill="currentColor">
+        <path d="M0 11h2v1H0zM3.5 8h2v4h-2zM7 5h2v7H7zM10.5 2h2v10h-2z"></path>
+        <path d="M21 3.6a8.6 8.6 0 0 1 11 0l-1.3 1.5a6.6 6.6 0 0 0-8.4 0zm2.6 3a4.6 4.6 0 0 1 5.8 0L26.5 10z"></path>
+        <rect x="35" y="2" width="8" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.2"></rect>
+        <rect x="36.6" y="5" width="4.8" height="4.6" rx=".6"></rect>
+      </svg>
+    </div>
+    <p class="clock" aria-hidden="true">12:30</p>
+    <nav class="launcher" aria-label={t.screenLabel}>
+      <ul>
+        {
+          apps.map((app) => (
+            <li>
+              <a href={href(appPaths(app.slug)[lang])}>
+                <AppIcon slug={app.slug} />
+                <span>{app.short}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="dock" aria-hidden="true"></div>
+  </div>
+</figure>

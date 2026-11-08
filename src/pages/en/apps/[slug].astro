@@ -1,0 +1,13 @@
+---
+// Una página por app, en inglés: /en/apps/<slug>/.
+import AppPage from '../../../components/AppPage.astro';
+import { apps, type App } from '../../../apps';
+
+export function getStaticPaths() {
+  return apps.map((app) => ({ params: { slug: app.slug }, props: { app } }));
+}
+
+const { app } = Astro.props as { app: App };
+---
+
+<AppPage app={app} lang="en" />

@@ -1,0 +1,28 @@
+---
+// Una captura de una app dentro de un marco de móvil, como en la web de Ludok Sound. Las capturas
+// van recortadas (sin la barra de estado) y en WebP a 600 px de ancho: el doble de lo que se ve,
+// para pantallas densas. Están en public/img/<app>/.
+import { href } from '../site';
+
+interface Props {
+  slug: string;
+  image: string;
+  alt: string;
+  eager?: boolean;
+  class?: string;
+}
+
+const { slug, image, alt, eager = false, class: className } = Astro.props;
+---
+
+<figure class:list={['phone', className]}>
+  <img
+    src={href(`/img/${slug}/${image}.webp`)}
+    alt={alt}
+    width="600"
+    height="1228"
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : 'auto'}
+    decoding="async"
+  />
+</figure>

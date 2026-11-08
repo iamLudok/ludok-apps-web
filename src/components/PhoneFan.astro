@@ -1,0 +1,50 @@
+---
+// La cabecera de una app con capturas: hasta tres móviles en abanico, que se abren al cargar la
+// página y se inclinan un poco siguiendo al ratón. Con una sola captura, un solo móvil.
+import Phone from './Phone.astro';
+import type { Shot } from '../apps/types';
+
+interface Props {
+  slug: string;
+  shots: Shot[];
+}
+
+const { slug, shots } = Astro.props;
+const fan = shots.slice(0, 3);
+---
+
+<div class:list={['fan', `fan-n${fan.length}`]} data-tilt>
+  <div class="fan-inner">
+    {
+      fan.map((shot, i) => (
+        // Los de detrás repiten capturas que salen más abajo con su texto: para el lector de
+        // pantalla basta con la de delante.
+        <Phone slug={slug} image={shot.image} alt={i === 0 ? shot.alt : ''} eager={i === 0} class={`fan-${i}`} />
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  // La inclinación sigue al ratón en toda la cabecera, como mucho 6 grados. Solo con ratón (en
+  // pantallas táctiles no hay «encima») y sin «reducir movimiento».
+  const fino = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const calma = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (fino && !calma) {
+    for (const fan of document.querySelectorAll<HTMLElement>('[data-tilt]')) {
+      const zona = fan.closest('section') ?? fan;
+      zona.addEventListener('pointermove', (event) => {
+        const caja = fan.getBoundingClientRect();
+        const x = (event.clientX - (caja.left + caja.width / 2)) / window.innerWidth;
+        const y = (event.clientY - (caja.top + caja.height / 2)) / window.innerHeight;
+        fan.style.setProperty('--ry', `${(x * 12).toFixed(2)}deg`);
+        fan.style.setProperty('--rx', `${(-y * 12).toFixed(2)}deg`);
+      });
+      zona.addEventListener('pointerleave', () => {
+        fan.style.setProperty('--ry', '0deg');
+        fan.style.setProperty('--rx', '0deg');
+      });
+    }
+  }
+</script>

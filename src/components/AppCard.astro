@@ -1,0 +1,36 @@
+---
+// La tarjeta de una app en el catálogo y en «Más apps». Toda la tarjeta lleva a su página: el enlace
+// está en el nombre y se estira por encima de la tarjeta, así que se lee como un solo enlace.
+import AppIcon from './AppIcon.astro';
+import Icon from './Icon.astro';
+import type { App } from '../apps';
+import { ui } from '../i18n';
+import { appPaths, href, type Lang } from '../site';
+
+interface Props {
+  app: App;
+  lang: Lang;
+}
+
+const { app, lang } = Astro.props;
+const t = ui[lang].catalog;
+const text = app.text[lang];
+---
+
+<li class="app-card">
+  <div class="app-card-top">
+    <AppIcon slug={app.slug} />
+    {!app.available && <span class="badge">{t.soon}</span>}
+  </div>
+  <div>
+    <span class="label">{text.category}</span>
+    <h3>
+      <a href={href(appPaths(app.slug)[lang])}>{app.name}</a>
+    </h3>
+  </div>
+  <p>{text.tagline}</p>
+  <span class="link" aria-hidden="true">
+    {t.more}
+    <Icon name="arrow" />
+  </span>
+</li>

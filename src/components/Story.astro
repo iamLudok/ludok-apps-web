@@ -1,0 +1,74 @@
+---
+// El recorrido por una app: un móvil fijo a un lado que cambia de pantalla según se baja, y al
+// otro lado el texto de cada pantalla. En pantallas estrechas no hay sitio para el móvil fijo:
+// cada texto lleva su captura debajo.
+import Phone from './Phone.astro';
+import type { Shot } from '../apps/types';
+import { href } from '../site';
+
+interface Props {
+  slug: string;
+  shots: Shot[];
+}
+
+const { slug, shots } = Astro.props;
+---
+
+<div class="story" data-story>
+  <div class="story-stage" aria-hidden="true">
+    <figure class="phone story-phone">
+      {
+        shots.map((shot, i) => (
+          <img
+            src={href(`/img/${slug}/${shot.image}.webp`)}
+            alt=""
+            width="600"
+            height="1228"
+            loading="lazy"
+            decoding="async"
+            class:list={{ 'is-active': i === 0 }}
+            data-shot={i}
+          />
+        ))
+      }
+    </figure>
+    <ol class="story-dots">
+      {shots.map((_, i) => <li class:list={{ 'is-active': i === 0 }} data-dot={i} />)}
+    </ol>
+  </div>
+  <ol class="story-steps">
+    {
+      shots.map((shot, i) => (
+        <li class:list={['story-step', { 'is-active': i === 0 }]} data-step={i}>
+          <span class="num">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{shot.title}</h3>
+          <p>{shot.body}</p>
+          <Phone slug={slug} image={shot.image} alt={shot.alt} class="story-inline" />
+        </li>
+      ))
+    }
+  </ol>
+</div>
+
+<script>
+  // El paso activo es el que cruza la mitad de la pantalla: su captura pasa al móvil fijo con un
+  // fundido. Sin JavaScript se queda la primera, y cada paso sigue teniendo su texto.
+  for (const story of document.querySelectorAll<HTMLElement>('[data-story]')) {
+    const activar = (indice: string) => {
+      for (const el of story.querySelectorAll<HTMLElement>('[data-shot], [data-dot], [data-step]')) {
+        const propio = el.dataset.shot ?? el.dataset.dot ?? el.dataset.step;
+        el.classList.toggle('is-active', propio === indice);
+      }
+    };
+    const observador = new IntersectionObserver(
+      (entradas) => {
+        for (const entrada of entradas) {
+          const indice = (entrada.target as HTMLElement).dataset.step;
+          if (entrada.isIntersecting && indice) activar(indice);
+        }
+      },
+      { rootMargin: '-45% 0px -45% 0px' },
+    );
+    story.querySelectorAll('[data-step]').forEach((paso) => observador.observe(paso));
+  }
+</script>

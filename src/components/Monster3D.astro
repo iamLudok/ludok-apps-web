@@ -1,0 +1,75 @@
+---
+// Un visor 3D de Ludok Monster: la torre entera o una lata suelta, que se giran con el dedo o el
+// ratón. three.js y los modelos (unos 8 MB la torre) solo se piden cuando el visor está a punto de
+// verse; con «ahorro de datos» en el navegador, se espera a que se pulse el botón.
+import AppIcon from './AppIcon.astro';
+import type { Lang } from '../site';
+import { href } from '../site';
+
+interface Props {
+  modo: 'torre' | 'lata';
+  lang: Lang;
+  /** Para lectores de pantalla: qué se ve. */
+  label: string;
+}
+
+const { modo, lang, label } = Astro.props;
+const t =
+  lang === 'es'
+    ? { cargando: 'Cargando', ver: 'Ver en 3D', girar: 'Arrastra para girar', error: 'Este navegador no puede mostrar el 3D.' }
+    : { cargando: 'Loading', ver: 'View in 3D', girar: 'Drag to spin', error: 'This browser cannot show 3D.' };
+---
+
+<div class:list={['viewer', `viewer-${modo}`]} data-monster3d={modo} data-base={href('/monster3d/')} role="img" aria-label={label}>
+  <div class="viewer-poster">
+    <AppIcon slug="monster" />
+    <button class="btn btn-sm viewer-load" type="button">{t.ver}</button>
+  </div>
+  <p class="viewer-status" aria-live="polite" data-loading={t.cargando} data-error={t.error}></p>
+  <p class="viewer-hint">{t.girar}</p>
+</div>
+
+<script>
+  // Cada visor arranca solo cuando le falta poco para verse. Los datos y three.js se importan en ese
+  // momento: quien no baja hasta aquí no descarga nada de esto.
+  type Conexion = { saveData?: boolean };
+  const ahorro = (navigator as Navigator & { connection?: Conexion }).connection?.saveData === true;
+
+  async function arrancar(visor: HTMLElement) {
+    if (visor.dataset.estado) return;
+    visor.dataset.estado = 'cargando';
+    const estado = visor.querySelector<HTMLElement>('.viewer-status')!;
+    const texto = estado.dataset.loading ?? '';
+    estado.textContent = `${texto}… 0 %`;
+    try {
+      const [{ montarVisor }, datos] = await Promise.all([
+        import('../lib/monster3d'),
+        import('../data/monster3d.json'),
+      ]);
+      const modo = visor.dataset.monster3d === 'lata' ? 'lata' : 'torre';
+      const latas = modo === 'lata' ? [datos.default.lata] : datos.default.torre;
+      await montarVisor(visor, latas as never, modo, visor.dataset.base ?? '/', (f) => {
+        estado.textContent = `${texto}… ${Math.round(f * 100)} %`;
+      });
+      visor.dataset.estado = 'listo';
+      estado.textContent = '';
+    } catch {
+      visor.dataset.estado = 'error';
+      estado.textContent = estado.dataset.error ?? '';
+    }
+  }
+
+  for (const visor of document.querySelectorAll<HTMLElement>('[data-monster3d]')) {
+    visor.querySelector('.viewer-load')?.addEventListener('click', () => arrancar(visor));
+    if (ahorro || !('IntersectionObserver' in window)) continue;
+    const observador = new IntersectionObserver(
+      ([entrada]) => {
+        if (!entrada?.isIntersecting) return;
+        observador.disconnect();
+        arrancar(visor);
+      },
+      { rootMargin: '300px' },
+    );
+    observador.observe(visor);
+  }
+</script>

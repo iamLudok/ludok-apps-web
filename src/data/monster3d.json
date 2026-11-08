@@ -1,0 +1,504 @@
+{
+  "torre": [
+    {
+      "slug": "ultra_white_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": -272,
+      "y": 0,
+      "apagada": false
+    },
+    {
+      "slug": "ultra_black_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": -204,
+      "y": 0,
+      "apagada": false
+    },
+    {
+      "slug": "ultra_paradise_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": -136,
+      "y": 0,
+      "apagada": false
+    },
+    {
+      "slug": "ultra_watermelon_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": -68,
+      "y": 0,
+      "apagada": false
+    },
+    {
+      "slug": "ultra_red_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 0,
+      "y": 0,
+      "apagada": false
+    },
+    {
+      "slug": "ultra_violet_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 68,
+      "y": 0,
+      "apagada": false
+    },
+    {
+      "slug": "ultra_fiesta_mango_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 136,
+      "y": 0,
+      "apagada": false
+    },
+    {
+      "slug": "ultra_golden_pineapple_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 204,
+      "y": 0,
+      "apagada": false
+    },
+    {
+      "slug": "ultra_vice_guava_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 272,
+      "y": 0,
+      "apagada": false
+    },
+    {
+      "slug": "ultra_rosa_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": -238,
+      "y": 167.9,
+      "apagada": false
+    },
+    {
+      "slug": "ultra_strawberry_dreams_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": -170,
+      "y": 167.9,
+      "apagada": false
+    },
+    {
+      "slug": "rehab_lemonade_500ml",
+      "anilla": "aro_negro",
+      "tapa": "negra",
+      "colorAnilla": "negro",
+      "alto": 168,
+      "diametro": 66,
+      "x": -102,
+      "y": 167.9,
+      "apagada": false
+    },
+    {
+      "slug": "rehab_peach_500ml",
+      "anilla": "aro_negro",
+      "tapa": "negra",
+      "colorAnilla": "negro",
+      "alto": 168,
+      "diametro": 66,
+      "x": -34,
+      "y": 167.9,
+      "apagada": false
+    },
+    {
+      "slug": "rehab_recover_lemonade_500ml",
+      "anilla": "aro_negro",
+      "tapa": "negra",
+      "colorAnilla": "negro",
+      "alto": 168,
+      "diametro": 66,
+      "x": 34,
+      "y": 167.9,
+      "apagada": false
+    },
+    {
+      "slug": "rehab_recover_peach_500ml",
+      "anilla": "aro_negro",
+      "tapa": "negra",
+      "colorAnilla": "negro",
+      "alto": 168,
+      "diametro": 66,
+      "x": 102,
+      "y": 167.9,
+      "apagada": false
+    },
+    {
+      "slug": "ultra_peachy_keen_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 170,
+      "y": 167.9,
+      "apagada": false
+    },
+    {
+      "slug": "ultra_fantasy_ruby_red_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 238,
+      "y": 167.9,
+      "apagada": false
+    },
+    {
+      "slug": "juiced_mango_loco_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": -204,
+      "y": 335.8,
+      "apagada": false
+    },
+    {
+      "slug": "juiced_aussie_lemonade_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": -136,
+      "y": 335.8,
+      "apagada": false
+    },
+    {
+      "slug": "juiced_bad_apple_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": -68,
+      "y": 335.8,
+      "apagada": false
+    },
+    {
+      "slug": "juiced_khaotic_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 0,
+      "y": 335.8,
+      "apagada": false
+    },
+    {
+      "slug": "juiced_monarch_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 68,
+      "y": 335.8,
+      "apagada": false
+    },
+    {
+      "slug": "juiced_ripper_500ml",
+      "anilla": "negra_lisa",
+      "tapa": "aluminio",
+      "colorAnilla": "negro",
+      "alto": 168,
+      "diametro": 66,
+      "x": 136,
+      "y": 335.8,
+      "apagada": false
+    },
+    {
+      "slug": "juiced_viking_berry_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 204,
+      "y": 335.8,
+      "apagada": false
+    },
+    {
+      "slug": "punch_pacific_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": -170,
+      "y": 503.70000000000005,
+      "apagada": false
+    },
+    {
+      "slug": "punch_pipeline_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": -102,
+      "y": 503.70000000000005,
+      "apagada": false
+    },
+    {
+      "slug": "reserve_watermelon_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": -34,
+      "y": 503.70000000000005,
+      "apagada": false
+    },
+    {
+      "slug": "reserve_white_pineapple_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 34,
+      "y": 503.70000000000005,
+      "apagada": false
+    },
+    {
+      "slug": "punch_rio_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 102,
+      "y": 503.70000000000005,
+      "apagada": false
+    },
+    {
+      "slug": "punch_mixxd_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 170,
+      "y": 503.70000000000005,
+      "apagada": false
+    },
+    {
+      "slug": "zero_sugar_azul_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": -136,
+      "y": 671.6,
+      "apagada": false
+    },
+    {
+      "slug": "nitro_super_dry_500ml",
+      "anilla": "aro_negro",
+      "tapa": "negra",
+      "colorAnilla": "negro",
+      "alto": 168,
+      "diametro": 66,
+      "x": -68,
+      "y": 671.6,
+      "apagada": false
+    },
+    {
+      "slug": "assault_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 0,
+      "y": 671.6,
+      "apagada": false
+    },
+    {
+      "slug": "mule_500ml",
+      "anilla": "aro_negro",
+      "tapa": "negra",
+      "colorAnilla": "negro",
+      "alto": 168,
+      "diametro": 66,
+      "x": 68,
+      "y": 671.6,
+      "apagada": false
+    },
+    {
+      "slug": "original_zero_sugar_500ml",
+      "anilla": "logo_negra",
+      "tapa": "verde",
+      "colorAnilla": "negro",
+      "alto": 168,
+      "diametro": 66,
+      "x": 136,
+      "y": 671.6,
+      "apagada": false
+    },
+    {
+      "slug": "lando_norris_500ml",
+      "anilla": "aro_negro",
+      "tapa": "negra",
+      "colorAnilla": "negro",
+      "alto": 168,
+      "diametro": 66,
+      "x": -102,
+      "y": 839.5,
+      "apagada": false
+    },
+    {
+      "slug": "vr46_500ml",
+      "anilla": "aro_negro",
+      "tapa": "negra",
+      "colorAnilla": "negro",
+      "alto": 168,
+      "diametro": 66,
+      "x": -34,
+      "y": 839.5,
+      "apagada": false
+    },
+    {
+      "slug": "vr46_zero_sugar_500ml",
+      "anilla": "aro_negro",
+      "tapa": "negra",
+      "colorAnilla": "negro",
+      "alto": 168,
+      "diametro": 66,
+      "x": 34,
+      "y": 839.5,
+      "apagada": false
+    },
+    {
+      "slug": "lewis_hamilton_500ml",
+      "anilla": "aro_plateado",
+      "tapa": "aluminio",
+      "alto": 168,
+      "diametro": 66,
+      "x": 102,
+      "y": 839.5,
+      "apagada": false
+    },
+    {
+      "slug": "dragon_peach_473ml",
+      "anilla": "aro_negro",
+      "tapa": "aluminio",
+      "colorAnilla": "naranja",
+      "alto": 157,
+      "diametro": 66,
+      "x": -68,
+      "y": 1007.4,
+      "apagada": false
+    },
+    {
+      "slug": "java_salted_caramel_444ml",
+      "anilla": "logo_negra",
+      "tapa": "dorada",
+      "colorAnilla": "negro",
+      "alto": 157,
+      "diametro": 65,
+      "x": 0,
+      "y": 1007.4,
+      "apagada": false
+    },
+    {
+      "slug": "ultra_blue_hawaiian_473ml",
+      "anilla": "logo_negra",
+      "tapa": "aluminio",
+      "colorAnilla": "negro",
+      "alto": 157,
+      "diametro": 66,
+      "x": 68,
+      "y": 1007.4,
+      "apagada": false
+    },
+    {
+      "slug": "ultra_fantasy_ruby_red_japon_355ml",
+      "anilla": "logo_negra",
+      "tapa": "aluminio",
+      "colorAnilla": "negro",
+      "alto": 156,
+      "diametro": 58,
+      "x": -34,
+      "y": 1164.3,
+      "apagada": false
+    },
+    {
+      "slug": "zero_sugar_japon_355ml",
+      "anilla": "logo_negra",
+      "tapa": "aluminio",
+      "colorAnilla": "azul",
+      "alto": 156,
+      "diametro": 58,
+      "x": 34,
+      "y": 1164.3,
+      "apagada": false
+    },
+    {
+      "slug": "original_500ml",
+      "anilla": "negra_lisa",
+      "tapa": "aluminio",
+      "colorAnilla": "negro",
+      "alto": 168,
+      "diametro": 66,
+      "x": 0,
+      "y": 1320.2,
+      "apagada": false
+    },
+    {
+      "slug": "lando_norris_gold_500ml",
+      "anilla": "aro_negro",
+      "tapa": "negra",
+      "colorAnilla": "negro",
+      "alto": 168,
+      "diametro": 66,
+      "x": -340,
+      "y": 0,
+      "apagada": false
+    },
+    {
+      "slug": "juiced_voodoo_grape_473ml",
+      "anilla": "logo_negra",
+      "tapa": "aluminio",
+      "colorAnilla": "morado",
+      "alto": 157,
+      "diametro": 66,
+      "x": 340,
+      "y": 0,
+      "apagada": false
+    }
+  ],
+  "lata": {
+    "slug": "original_500ml",
+    "anilla": "negra_lisa",
+    "tapa": "aluminio",
+    "colorAnilla": "negro",
+    "alto": 168,
+    "diametro": 66,
+    "x": 0,
+    "y": 0,
+    "apagada": false
+  }
+}

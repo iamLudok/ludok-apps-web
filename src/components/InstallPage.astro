@@ -1,0 +1,72 @@
+---
+// La guía para instalar un APK, en el idioma que le pasen. Las apps no están en Google Play, y es
+// el paso donde más gente se queda: por eso tiene página propia y la enlaza el aviso de descarga.
+import AppCard from './AppCard.astro';
+import Base from '../layouts/Base.astro';
+import { apps } from '../apps';
+import { ui } from '../i18n';
+import { paths, type Lang } from '../site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang].install;
+---
+
+<Base lang={lang} title={t.meta.title} description={t.meta.description} paths={paths.install} current="install">
+  <section class="page-head">
+    <div class="wrap">
+      <span class="label">{t.kicker}</span>
+      <h1>{t.title}</h1>
+      <p>{t.lead}</p>
+    </div>
+  </section>
+
+  <section class="section section-first">
+    <div class="wrap">
+      <ol class="features steps">
+        {
+          t.steps.map((step, i) => (
+            <li class="feature">
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+              <h2>{step.title}</h2>
+              <p>{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>{t.topicsTitle}</h2>
+      </div>
+      <ul class="cards topics">
+        {
+          t.topics.map((topic) => (
+            <li class="card">
+              <h3>{topic.title}</h3>
+              <p>{topic.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>{t.ctaTitle}</h2>
+        <p>{t.ctaBody}</p>
+      </div>
+      <ul class="app-grid">
+        {apps.map((app) => <AppCard app={app} lang={lang} />)}
+      </ul>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,12 @@
+---
+// Portada en castellano, el idioma por defecto (sin prefijo en la ruta).
+import Home from '../components/Home.astro';
+import { KOFI_URL } from '../site';
+
+// La portada se compila una sola vez: buen sitio para avisar de que la web saldría sin pagos.
+if (import.meta.env.PROD && !KOFI_URL) {
+  console.warn('[ludok] KOFI_URL está vacío en src/site.ts: la web sale sin botones de pago.');
+}
+---
+
+<Home lang="es" />

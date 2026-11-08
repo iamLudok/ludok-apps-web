@@ -1,0 +1,81 @@
+---
+// Cabecera fija: marca, secciones, tema, idioma, GitHub y el botón de descarga. En pantallas
+// estrechas se quedan solo las herramientas: las secciones están a un scroll.
+import Icon from './Icon.astro';
+import { ui } from '../i18n';
+import { GITHUB_URL, href, paths, type Current, type Lang } from '../site';
+
+interface Props {
+  lang: Lang;
+  /** La misma página en el otro idioma. */
+  altPath: string;
+  current?: Current;
+}
+
+const { lang, altPath, current = 'home' } = Astro.props;
+const t = ui[lang].nav;
+const home = href(paths.home[lang]);
+const otherLang: Lang = lang === 'es' ? 'en' : 'es';
+// En la página de una app, «Descargar» lleva a su caja de descarga; en el resto, al catálogo.
+const downloadHref = current === 'app' ? '#download' : `${home}#apps`;
+---
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href={home}>
+      Ludok
+    </a>
+    <nav class="site-nav" aria-label={t.main}>
+      <a href={`${home}#apps`}>{t.apps}</a>
+      <a href={`${home}#pay`}>{t.pay}</a>
+      <a href={href(paths.install[lang])} aria-current={current === 'install' ? 'page' : undefined}>
+        {t.install}
+      </a>
+      <a href={`${home}#faq`}>{t.faq}</a>
+    </nav>
+    <div class="header-tools">
+      <button class="icon-btn theme-toggle" type="button" aria-label={t.theme} title={t.theme}>
+        <Icon name="sun" />
+        <Icon name="moon" />
+      </button>
+      <a class="icon-btn" href={href(altPath)} hreflang={otherLang} lang={otherLang} aria-label={t.langName} title={t.langName}>
+        {t.langShort}
+      </a>
+      <a class="icon-btn github" href={GITHUB_URL} aria-label={t.github} title={t.github}>
+        <Icon name="github" />
+      </a>
+      <a class="btn btn-primary btn-sm" href={downloadHref}>{t.download}</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  // El tema elegido se guarda; si nunca se ha elegido, se sigue al sistema, también cuando este
+  // cambia con la página abierta. El tema inicial lo pone el script en línea de Base.astro.
+  const root = document.documentElement;
+
+  document.querySelector('.theme-toggle')?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      // Sin almacenamiento (modo privado estricto): vale para esta visita.
+    }
+  });
+
+  matchMedia('(prefers-color-scheme: light)').addEventListener('change', (event) => {
+    try {
+      if (localStorage.getItem('theme')) return;
+    } catch {
+      // Sin almacenamiento no hay elección guardada: se sigue al sistema.
+    }
+    root.dataset.theme = event.matches ? 'light' : 'dark';
+  });
+
+  // La línea de debajo de la cabecera solo cuando hay algo debajo: arriba del todo sobra.
+  const header = document.querySelector('.site-header');
+  const onScroll = () => header?.toggleAttribute('data-scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>

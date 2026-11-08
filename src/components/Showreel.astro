@@ -1,0 +1,46 @@
+---
+// La cinta de la portada: capturas reales de todas las apps, en móviles que pasan solos de lado a
+// lado. Va dos veces seguida para que el bucle no tenga costura; la segunda copia es solo visual.
+// Se para al pasar el ratón por encima, y con «reducir movimiento» se queda quieta y se desliza a mano.
+import AppIcon from './AppIcon.astro';
+import { apps } from '../apps';
+import { appPaths, href, type Lang } from '../site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+// Dos capturas por app como mucho, intercaladas: si no, salen seguidas las cinco de Sound.
+const porApp = apps.map((app) => (app.text[lang].shots ?? []).slice(0, 2).map((shot) => ({ app, shot })));
+const items = [0, 1].flatMap((ronda) => porApp.map((lista) => lista[ronda]).filter((item) => item !== undefined));
+---
+
+<div class="reel">
+  {
+    [0, 1].map((copia) => (
+      <ul class="reel-track" aria-hidden={copia === 1 ? 'true' : undefined}>
+        {items.map(({ app, shot }) => (
+          <li>
+            <a href={href(appPaths(app.slug)[lang])} tabindex={copia === 1 ? -1 : undefined}>
+              <figure class="phone">
+                <img
+                  src={href(`/img/${app.slug}/${shot.image}.webp`)}
+                  alt={copia === 1 ? '' : shot.alt}
+                  width="600"
+                  height="1228"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <span class="reel-label">
+                <AppIcon slug={app.slug} />
+                {app.name}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ))
+  }
+</div>

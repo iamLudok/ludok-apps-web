@@ -1,0 +1,186 @@
+---
+// La portada entera, en el idioma que le pasen: pages/index.astro (castellano) y
+// pages/en/index.astro (inglés) solo la llaman. Los textos están en i18n.ts y en src/apps/.
+import AppCard from './AppCard.astro';
+import HomeScreen from './HomeScreen.astro';
+import Icon from './Icon.astro';
+import KofiButton from './KofiButton.astro';
+import Showreel from './Showreel.astro';
+import Base from '../layouts/Base.astro';
+import { apps } from '../apps';
+import { ui } from '../i18n';
+import { GITHUB_URL, href, KOFI_URL, paths, type Lang } from '../site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<Base lang={lang} title={t.meta.title} description={t.meta.description} paths={paths.home}>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="label"><span class="dot"></span>{t.hero.kicker}</span>
+        <h1>
+          {t.hero.title}
+          <span>{t.hero.titleMuted}</span>
+        </h1>
+        <p class="lead">{t.hero.lead}</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#apps">
+            <Icon name="download" />
+            {t.hero.primary}
+          </a>
+          <a class="btn" href="#pay">
+            <Icon name="heart" />
+            {t.hero.secondary}
+          </a>
+        </div>
+        <p class="platforms">{t.hero.note}</p>
+      </div>
+      <div class="hero-visual">
+        <HomeScreen lang={lang} />
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <ul class="facts">
+      <li>
+        <strong>{apps.length}</strong>
+        <span>{t.facts.apps}</span>
+      </li>
+      {
+        t.facts.items.map((fact) => (
+          <li>
+            <strong>{fact.value}</strong>
+            <span>{fact.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <section class="section reel-section" id="inside">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="label"><span class="dot"></span>{t.reel.kicker}</span>
+        <h2>{t.reel.title}</h2>
+        <p>{t.reel.lead}</p>
+      </div>
+    </div>
+    <Showreel lang={lang} />
+  </section>
+
+  <section class="section" id="apps">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="label">{t.catalog.kicker}</span>
+        <h2>{t.catalog.title}</h2>
+        <p>{t.catalog.lead}</p>
+      </div>
+      <ul class="app-grid">
+        {apps.map((app) => <AppCard app={app} lang={lang} />)}
+      </ul>
+      <div class="need">
+        <div>
+          <h3>{t.catalog.installTitle}</h3>
+          <p>{t.catalog.installBody}</p>
+        </div>
+        <a class="btn" href={href(paths.install[lang])}>
+          {t.catalog.installCta}
+          <Icon name="arrow" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="principles">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="label">{t.principles.kicker}</span>
+        <h2>{t.principles.title}</h2>
+        <p>{t.principles.lead}</p>
+      </div>
+      <ul class="features">
+        {
+          t.principles.items.map((item, i) => (
+            <li class="feature" data-reveal style={`--delay: ${(i % 3) * 80}ms`}>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section pay" id="pay">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="label"><span class="dot"></span>{t.pay.kicker}</span>
+        <h2>{t.pay.title}</h2>
+        <p>{t.pay.lead}</p>
+      </div>
+      <ol class="features" style="--cols: 3">
+        {
+          t.pay.steps.map((step, i) => (
+            <li class="feature" data-reveal style={`--delay: ${(i % 3) * 80}ms`}>
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+      {
+        (KOFI_URL || import.meta.env.DEV) && (
+          <div class="pay-cta">
+            <KofiButton lang={lang} />
+            <p>{t.pay.ctaNote}</p>
+          </div>
+        )
+      }
+      <div class="pay-other">
+        <h3>{t.pay.otherTitle}</h3>
+        <ul class="cards">
+          {
+            t.pay.other.map((item, i) => (
+              <li class="card" data-reveal style={`--delay: ${i * 80}ms`}>
+                <h4>{item.title}</h4>
+                <p>{item.body}</p>
+                {i === 0 && (
+                  <a class="btn btn-sm" href={GITHUB_URL}>
+                    <Icon name="star" />
+                    {t.pay.github}
+                  </a>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>{t.faq.title}</h2>
+      </div>
+      <div class="faq">
+        {
+          t.faq.items.map((item) => (
+            <details>
+              <summary>{item.q}</summary>
+              <p>{item.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>
